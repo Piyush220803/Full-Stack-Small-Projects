@@ -4,11 +4,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/fde9b11130.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
+        <div class="music-player">
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+            <img src="photo/download.png" class="song-img">
+            <h1>Dancing in the flames</h1>
+            <p>The Weeknd</p>
+
+            <audio id="song">  /*<audio controls id="song"></audio> so we have remove the default controls for the player by just removing controls keyboard */
+                <source src="media/song.mp3" type="audio/mpeg"> /* mpeg is for the mp3 file support  */
+            </audio>
+            <input type="range" value="0" id="progress">
+            <div class="controls">
+                <div><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
+                <div><i class="fa-solid fa-forward"></i></div>
+            </div>
+
+        </div>
         
     </div>
     
+    <script>
+
+        let progress = document.getElementById("progress");
+        let song = document.getElementById("song");
+        let ctrlIcon = document.getElementById("ctrlIcon");
+
+        song.onloadedmetadata = function(){
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        }
+
+        function playPause(){
+            if(ctrlIcon.classList.contains("fa-pause")){   /*this if statement pause the song when clicked on icon and then change the icon from pause to play*/
+                song.pause();
+                ctrlIcon.classList.remove("fa-pause");
+                ctrlIcon.classList.add("fa-play");          /* here icon changed*/
+            }else{
+                song.play();
+                ctrlIcon.classList.add("fa-pause");
+                ctrlIcon.classList.remove("fa-play");
+            }
+        }
+
+        if(song.play()){        /*for the song bar to upadte every 500ms when the song is playing */
+            setInterval(()=>{
+                progress.value = song.currentTime;
+            },500);
+        }
+
+        progress.onchange = function(){    /*click anywhere on the bar to get to that time stamp and play or pause */
+            song.currentTime = progress.value;
+            ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+        }
+    </script>
 </body>
 </html>
