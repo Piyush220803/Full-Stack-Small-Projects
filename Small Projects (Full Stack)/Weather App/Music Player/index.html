@@ -36,14 +36,14 @@
     </div>
     
     <script>
-
-        let progress = document.getElementById("progress");
+        /*We store this reference in the variables so we can manipulate it later. */
+        let progress = document.getElementById("progress"); 
         let song = document.getElementById("song");
         let ctrlIcon = document.getElementById("ctrlIcon");
 
         song.onloadedmetadata = function(){
-            progress.max = song.duration;
-            progress.value = song.currentTime;
+            progress.max = song.duration;         /*this line sets the max attribute of the progress element to the duration of the song */
+            progress.value = song.currentTime;    /*This line sets the value attribute of the progress element to the currentTime of the song */
         }
 
         function playPause(){
