@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stop-Watch</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="stopwatch">
+      <h1 id="displayTime">00:00:00</h1>
+      <div class="buttons">
+        <img src="./images/stop.png" onclick="watchStop()" />
+        <img src="./images/start.png" onclick="watchStart()" />
+        <img src="./images/reset.png" onclick="watchReset()" />
+      </div>
+    </div>
+
+    <script>
+      let [seconds, minutes, hours] = [0, 0, 0]; // Initialize time variables to 0
+      let displayTime = document.getElementById("displayTime"); // Get the display element
+      let timer = null; // Initialize timer variable
+
+      function stopwatch() {
+        seconds++; // Increment seconds
+        if (seconds == 60) {
+          // If seconds reach 60
+          seconds = 0; // Reset seconds to 0
+          minutes++; // Increment minutes
+          if (minutes == 60) {
+            // If minutes reach 60
+            minutes = 0; // Reset minutes to 0
+            hours++; // Increment hours
+          }
+        }
+
+        // Format hours, minutes, and seconds to always be two digits
+        let h = hours < 10 ? "0" + hours : hours;
+        let m = minutes < 10 ? "0" + minutes : minutes;
+        let s = seconds < 10 ? "0" + seconds : seconds;
+        displayTime.innerHTML = h + ":" + m + ":" + s; // Update the display
+      }
+
+      function watchStart() {
+        if (timer !== null) {
+          // If timer is already running
+          clearInterval(timer); // Clear the existing timer
+        }
+        timer = setInterval(stopwatch, 1000); // Start a new timer that runs every second
+      }
+
+      function watchStop() {
+        clearInterval(timer); // Stop the timer
+      }
+
+      function watchReset() {
+        clearInterval(timer); // Stop the timer
+        [seconds, minutes, hours] = [0, 0, 0]; // Reset time variables to 0
+        displayTime.innerHTML = "00:00:00"; // Reset the display
+      }
+    </script>
+  </body>
+</html>
